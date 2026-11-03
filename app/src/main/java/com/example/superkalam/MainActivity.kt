@@ -82,7 +82,10 @@ fun SuperKalamDashboard() {
                 selectedItem = selectedSidebar,
                 onSelected = {
                     selectedSidebar = it
-                    selectedMainView = if (it == "My Progress") "Progress" else "Practice"
+                    selectedMainView = when (it) {
+                        "My Progress" -> "Progress"
+                        else -> "Practice"
+                    }
                 }
             )
 
@@ -160,7 +163,8 @@ fun Sidebar(selectedItem: String, onSelected: (String) -> Unit) {
         "Prelims PYQs",
         "My Tests",
         "Answer Evaluation",
-        "PYQ Practice"
+        "PYQ Practice",
+        "My Progress"
     )
 
     Column(
@@ -542,13 +546,21 @@ fun FeatureCard(feature: FeatureItem) {
 
             Spacer(modifier = Modifier.width(18.dp))
 
-            Text(
-                feature.title,
-                color = Color(0xFF1B1F24),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    feature.title,
+                    color = Color(0xFF1B1F24),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    feature.description,
+                    color = Color(0xFF5D6977),
+                    fontSize = 14.sp,
+                    lineHeight = 18.sp
+                )
+            }
         }
     }
 }
@@ -570,5 +582,6 @@ private fun iconForItem(item: String): String = when (item) {
     "My Tests" -> "▣"
     "Answer Evaluation" -> "◍"
     "PYQ Practice" -> "▤"
+    "My Progress" -> "◔"
     else -> "•"
 }
